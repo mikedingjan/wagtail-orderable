@@ -1,11 +1,11 @@
-from django.conf.urls import url
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db import transaction
 from django.db.models import F, Count
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
+from django.urls import re_path
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from wagtailorderable.models import Orderable
 
@@ -162,7 +162,7 @@ class OrderableMixin(object):
     def get_admin_urls_for_registration(self):
         urls = super(OrderableMixin, self).get_admin_urls_for_registration()
         urls += (
-            url(
+            re_path(
                 self.url_helper.get_action_url_pattern('reorder'),
                 view=self.reorder_view,
                 name=self.url_helper.get_action_url_name('reorder')
